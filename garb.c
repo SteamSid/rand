@@ -22,6 +22,5 @@ void dlog(const char* str,unsigned int lvl) {
     case DLOG_ERROR: {
       _DLOG_PRNT("\033[31;1mlerrr:\033[0m"); }
     case DLOG_CRIT:  {
-      _DLOG_PRNT("\033[36;1mlcrit:\033[0m"); }
-  }
+      _DLOG_PRNT("\033[36;1mlcrit:\033[0m"); } }
   _dlog_depth++; }
