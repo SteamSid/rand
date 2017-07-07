@@ -5,9 +5,9 @@
 #include <stdbool.h>
 
 #define DLOG_LOG   0
-#define DLOG_WARN  0
-#define DLOG_ERROR 0
-#define DLOG_CRIT  0
+#define DLOG_WARN  1
+#define DLOG_ERROR 2
+#define DLOG_CRIT  3
 
 #define _DLOG_PRNT(YES) printf("[%#06x] %s %s",_dlog_depth,YES,str);
 
