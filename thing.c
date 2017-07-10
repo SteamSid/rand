@@ -27,6 +27,14 @@ struct screen{
 //    B1    = X
 //    B2    = Y
 //    B3    = Attributes
+//          b1 = Flip X
+//          b2 = Flip Y
+//          b3 = Visible
+//          b4 = Can collide
+//          b5 = Collision Stat - Bottom
+//          b6 = Collision Stat - Top
+//          b7 = Collision Stat - Left
+//          b8 = Collision Stat - Right
 //    B4/B5 = Pointer to color table
 //    B5/B6 = Pointer to sprite data
 //    B7    = Sprite data width
