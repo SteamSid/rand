@@ -33,7 +33,9 @@ void dlog(const char* str,unsigned int lvl) {
 
 // # CPU # //
 
-typedef void (*_op_ptr) (uint8_t);
+uint32_t _signal=0;
+
+typedef void (*_op_ptr) (uint32_t);
 
 const char* _op_nametable[256]={
   "BRK","ORA","NNN","NNN","NNN","ORA","ASL","NNN","PHP","ORA","ASL","NNN","NNN","ORA","ASL","NNN",
@@ -52,6 +54,15 @@ const char* _op_nametable[256]={
   "BNE","CMP","NNN","NNN","NNN","CMP","DEC","NNN","CLD","CMP","NNN","NNN","NNN","CMP","DEC","NNN",
   "CPX","SBC","NNN","NNN","CPX","SBC","INC","NNN","INX","SBC","NOP","NNN","CPX","SBC","INC","NNN",
   "BEQ","SBC","NNN","NNN","NNN","SBC","INC","NNN","SED","SBC","NNN","NNN","NNN","SBC","INC","NNN"};
+
+void _op_BRK(uint32_t op) {
+  _signal=1; }
+
+void _op_ORA(uint32_t op) {
+  return; }
+
+void _op_ASL(uint32_t op) {
+  return; }
 
 _op_ptr _op_jumptable[256]={};
 
