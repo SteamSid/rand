@@ -15,7 +15,12 @@
                  delta = 0,
                  timestep = 1000 / 60;
                  
-      handleMouseMove
+      var mx=0, my=0;
+                 
+      function handleMouseMove(event){
+        event = event || window.event;
+        mx=event.pageX;
+        my=event.pageY; }
     
       /*function start(){
         document.getElementById("cscrdiv").innerHTML="<canvas width="+window.innerWidth+" height="+window.innerHeight+" id='scrcanvas'>Lol</canvas>";
@@ -38,7 +43,8 @@
         
       function draw(){
         drw_clear("#000000")
-        drw_rect(Math.sin(xval/20)*100+200,Math.cos(xval/20)*100+200,20,20,"#FF0000"); }
+        drw_rect(Math.sin(xval/20)*100+200,Math.cos(xval/20)*100+200,20,20,"#FF0000");
+        drw_rect(mx-25,my-25,50,50,"#00FF00"); }
         
       function mainLoop(timestamp){
         if (timestamp < lastFrameTimeMs + (1000 / maxFPS)) {
