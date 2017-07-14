@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>yes</title>
+  </head>
+  <body>
+    <div id="cscrdiv" style="margin: 0 0 0 0;position: fixed;left: 0;top: 0"></div>
+    <script>
+      document.onmousemove = handleMouseMove;
+      document.getElementById("cscrdiv").innerHTML="<canvas width="+window.innerWidth+" height="+window.innerHeight+" id='scrcanvas'>Lol</canvas>";
+      var scr=document.getElementById("scrcanvas");
+      var cs =scr.getContext("2d");
+      
+      var xval=0,lastFrameTimeMs = 0,
+                 maxFPS = 60,
+                 delta = 0,
+                 timestep = 1000 / 60;
+                 
+      handleMouseMove
+    
+      /*function start(){
+        document.getElementById("cscrdiv").innerHTML="<canvas width="+window.innerWidth+" height="+window.innerHeight+" id='scrcanvas'>Lol</canvas>";
+        var canvas=document.getElementById("scrcanvas");
+        var cantext=canvas.getContext("2d");
+        cantext.fillStyle = "#FF0000"
+        cantext.fillRect(0,0,100,100); }*/
+        
+      function drw_clear(c){
+        cs.fillStyle=c;
+        cs.fillRect(0,0,scr.width,scr.height); }
+       
+      function drw_rect(x,y,w,h,c){
+        cs.fillStyle=c;
+        cs.fillRect(x,y,w,h); }
+        
+      function update(delta){
+        xval+=0.16*delta;
+      }
+        
+      function draw(){
+        drw_clear("#000000")
+        drw_rect(Math.sin(xval/20)*100+200,Math.cos(xval/20)*100+200,20,20,"#FF0000"); }
+        
+      function mainLoop(timestamp){
+        if (timestamp < lastFrameTimeMs + (1000 / maxFPS)) {
+          requestAnimationFrame(mainLoop);
+          return;
+        }
+        delta += timestamp - lastFrameTimeMs;
+        lastFrameTimeMs = timestamp;
+    
+        while (delta >= timestep) {
+          update(timestep);
+          delta -= timestep;
+        }
+        draw();
+        requestAnimationFrame(mainLoop); }
+      
+      requestAnimationFrame(mainLoop);
+    </script>
+  </body>
+</html>
