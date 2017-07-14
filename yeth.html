@@ -13,14 +13,61 @@
       var xval=0,lastFrameTimeMs = 0,
                  maxFPS = 60,
                  delta = 0,
-                 timestep = 1000 / 60;
+                 timestep = 1000 / 60, vval=0.04, gravity=2;
                  
       var mx=0, my=0;
+                 
+      class Actor {
+        constructor(x,y,w,h,vx,vy,c){
+          this.x=x;this.y=y;
+          this.w=w;this.h=h;
+          this.c=c;this.vx=vx;
+          this.vy=vy; }
+          
+        draw(){
+          drw_rect(this.x,this.h,this.w,this.h,this.c); }
+        phys(){
+          this.x+=this.vx;
+          this.y+=this.vy;
+          this.vy-=gravity*timestep; }
+      }
                  
       function handleMouseMove(event){
         event = event || window.event;
         mx=event.pageX;
         my=event.pageY; }
+        
+      window.addEventListener("keydown", function (event) {
+        if (event.defaultPrevented) {
+          return; // Do nothing if the event was already processed
+        }
+      
+        switch (event.key) {
+          case "ArrowDown":
+            vval-=0.02;
+            break;
+          case "ArrowUp":
+            vval+=0.02;
+            break;
+          case "ArrowLeft":
+            // Do something for "left arrow" key press.
+            break;
+          case "ArrowRight":
+            // Do something for "right arrow" key press.
+            break;
+          case "Enter":
+            // Do something for "enter" or "return" key press.
+            break;
+          case "Escape":
+            // Do something for "esc" key press.
+            break;
+          default:
+            return; // Quit when this doesn't handle the key event.
+        }
+      
+        // Cancel the default action to avoid it being handled twice
+        event.preventDefault();
+      }, true);
     
       /*function start(){
         document.getElementById("cscrdiv").innerHTML="<canvas width="+window.innerWidth+" height="+window.innerHeight+" id='scrcanvas'>Lol</canvas>";
@@ -30,6 +77,8 @@
         cantext.fillRect(0,0,100,100); }*/
         
       function drw_clear(c){
+        /*cs.clearStyle=c;
+        cs.clearRect(0,0,scr.width,scr.height);*/
         cs.fillStyle=c;
         cs.fillRect(0,0,scr.width,scr.height); }
        
@@ -37,14 +86,27 @@
         cs.fillStyle=c;
         cs.fillRect(x,y,w,h); }
         
+      function drw_line(x1,y1,x2,y2,c,w){
+        cs.beginPath();
+        cs.lineWidth=w;
+        cs.strokeStyle=c;
+        cs.moveTo(x1,y1);
+        cs.lineTo(x2,y2);
+        cs.stroke(); }
+        
+      var ch=new Actor(20,20,20,20,0,0,"#00FF00");
+        
       function update(delta){
-        xval+=0.16*delta;
+        ch.phys();
+        xval+=vval*delta;
       }
         
       function draw(){
         drw_clear("#000000")
-        drw_rect(Math.sin(xval/20)*100+200,Math.cos(xval/20)*100+200,20,20,"#FF0000");
-        drw_rect(mx-25,my-25,50,50,"#00FF00"); }
+        drw_rect(Math.sin(xval/20)*100+190,Math.cos(xval/20)*100+190,20,20,"#FF0000");
+        drw_rect(mx-25,my-25,50,50,"#00FF00");
+        drw_line(200,200,Math.sin(xval/20)*100+200,Math.cos(xval/20)*100+200,"#0000FF",5);
+        ch.draw(); }
         
       function mainLoop(timestamp){
         if (timestamp < lastFrameTimeMs + (1000 / maxFPS)) {
